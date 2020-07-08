@@ -12,6 +12,7 @@
 
 <body>
     <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
     <a href="#" onclick="signOut();">Sign out</a>
 
 
@@ -43,6 +44,7 @@
                 console.log('Signed in as: ' + xhr.responseText);
             };
             xhr.send('idtoken=' + id_token);
+
         }
     </script>
 

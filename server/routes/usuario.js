@@ -30,6 +30,7 @@ app.get('/usuario', verificaToken, (req, res) => {
     let limite = req.query.limite || 5;
     limite = Number(limite);
 
+
     // la lista de campos en find es opcional para filtrar algunos campos
     // se agrego {estado: true} -- aunque es opcional para filtrar registros
     // de igual forma en count
@@ -94,6 +95,8 @@ app.post('/usuario', [verificaToken, verificaAdmin_Role], function(req, res) {
 
 });
 
+
+
 app.put('/usuario/:id', [verificaToken, verificaAdmin_Role], function(req, res) {
     let myid = req.params.id;
     //let body = req.body;
@@ -155,7 +158,9 @@ app.put('/usuario/:id', [verificaToken, verificaAdmin_Role], function(req, res) 
 
 
 
-})
+});
+
+
 
 app.delete('/usuario/:id', [verificaToken, verificaAdmin_Role], function(req, res) {
 
