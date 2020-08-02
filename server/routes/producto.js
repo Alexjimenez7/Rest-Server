@@ -27,7 +27,7 @@ app.get('/producto', verificaToken, (req, res) => {
         .populate('categoria')
         .exec((err, usuariosDB) => {
             if (err) {
-                res.status(400).json({
+                return res.status(400).json({
                     ok: false,
                     err
                 });
@@ -54,19 +54,26 @@ app.get('/producto/:id', verificaToken, (req, res) => {
     Producto.findById(id, (err, productoDB) => {
 
             if (err) {
-                res.status(500).json({
+                return res.status(500).json({
                     ok: false,
                     err
                 });
             }
 
             if (!productoDB) {
-                res.status(500).json({
+                return res.status(404).json({
                     ok: false,
                     err: {
                         message: 'El ID del producto NO existe'
                     }
                 });
+
+                /* res.json({
+                     ok: false,
+                     err: {
+                         message: 'El ID del producto NO existe'
+                     }
+                 });*/
             }
 
             res.json({
@@ -97,7 +104,7 @@ app.get('/producto/buscar/:termino', verificaToken, (req, res) => {
         .exec((err, productoDB) => {
 
             if (err) {
-                res.status(500).json({
+                return res.status(500).json({
                     ok: false,
                     err
                 });
@@ -133,14 +140,14 @@ app.post('/producto', verificaToken, (req, res) => {
 
     producto.save((err, productoDB) => {
         if (err) {
-            res.status(500).json({
+            return res.status(500).json({
                 ok: false,
                 err
             });
         }
 
         if (!productoDB) {
-            res.status(400).json({
+            return res.status(400).json({
                 ok: false,
                 err
             });
@@ -167,13 +174,13 @@ app.put('/producto/:id', verificaToken, (req, res) => {
 
     Producto.findById(id, (err, productoDB) => {
         if (err) {
-            res.status(500).json({
+            return res.status(500).json({
                 ok: false,
                 err
             })
         }
         if (!productoDB) {
-            res.status(400).json({
+            return res.status(400).json({
                 ok: false,
                 err: {
                     message: 'El ID de producto NO existe'
@@ -189,7 +196,7 @@ app.put('/producto/:id', verificaToken, (req, res) => {
 
         productoDB.save((err, productoGuardado) => {
             if (err) {
-                res.status(500).json({
+                return res.status(500).json({
                     ok: false,
                     err
                 })
@@ -217,13 +224,13 @@ app.delete('/producto/:id', verificaToken, (req, res) => {
         .exec((err, productoDB) => {
 
             if (err) {
-                res.status(500).json({
+                return res.status(500).json({
                     ok: false,
                     err
                 })
             }
             if (!productoDB) {
-                res.status(500).json({
+                return res.status(500).json({
                     ok: false,
                     err: {
                         message: ' El ID de producto NO exite'
@@ -234,7 +241,7 @@ app.delete('/producto/:id', verificaToken, (req, res) => {
             productoDB.disponible = false;
             productoDB.save((err, productoBorrado) => {
                 if (err) {
-                    res.status(500).json({
+                    return res.status(500).json({
                         ok: false,
                         err
                     })

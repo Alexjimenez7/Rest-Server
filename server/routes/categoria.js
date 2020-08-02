@@ -19,7 +19,7 @@ app.get('/categoria', verificaToken, (req, res) => {
         .exec((err, categorias) => {
 
             if (err) {
-                res.status(500).json({
+                return res.status(500).json({
                     ok: false,
                     err
                 });
@@ -48,14 +48,14 @@ app.get('/categoria/:id', verificaToken, (req, res) => {
     Categoria.findById(id, (err, categoriaDB) => {
 
         if (err) {
-            res.status(500).json({
+            return res.status(500).json({
                 ok: false,
                 err
             });
         }
 
         if (!categoriaDB) {
-            res.status(500).json({
+            return res.status(500).json({
                 ok: false,
                 err: {
                     message: ' El ID de la categoria NO es valido'
@@ -88,14 +88,14 @@ app.post('/categoria', verificaToken, (req, res) => {
 
     categoria.save((err, categoriaDB) => {
         if (err) {
-            res.status(500).json({
+            return res.status(500).json({
                 ok: false,
                 err
             });
         }
 
         if (!categoriaDB) {
-            res.status(400).json({
+            return res.status(400).json({
                 ok: false,
                 err
             });
@@ -129,14 +129,14 @@ app.put('/categoria/:id', verificaToken, (req, res) => {
 
 
         if (err) {
-            res.status(500).json({
+            return res.status(500).json({
                 ok: false,
                 err
             });
         }
 
         if (!categoriaDB) {
-            res.status(400).json({
+            return res.status(400).json({
                 ok: false,
                 err
             });
@@ -164,14 +164,14 @@ app.delete('/categoria/:id', [verificaToken, verificaAdmin_Role], (req, res) => 
     Categoria.findByIdAndDelete(id, (err, categoriaBorrada) => {
 
         if (err) {
-            res.status(500).json({
+            return res.status(500).json({
                 ok: false,
                 err
             });
         }
 
         if (!categoriaBorrada) {
-            res.status(400).json({
+            return res.status(400).json({
                 ok: false,
                 err: {
                     message: 'El id NO existe'

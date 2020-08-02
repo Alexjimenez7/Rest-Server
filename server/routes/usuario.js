@@ -40,7 +40,7 @@ app.get('/usuario', verificaToken, (req, res) => {
         .exec((err, usuarios) => {
 
             if (err) {
-                res.status(400).json({
+                return res.status(400).json({
                     ok: false,
                     err
                 });
@@ -76,7 +76,7 @@ app.post('/usuario', [verificaToken, verificaAdmin_Role], function(req, res) {
 
     usuario.save((err, usuarioDB) => {
         if (err) {
-            res.status(400).json({
+            return res.status(400).json({
                 ok: false,
                 err
             });
@@ -118,7 +118,7 @@ app.put('/usuario/:id', [verificaToken, verificaAdmin_Role], function(req, res) 
     }, (err, usuarioDB) => {
         //usuarioDB.save
         if (err) {
-            res.status(400).json({
+            return res.status(400).json({
                 ok: false,
                 err
             });
@@ -175,14 +175,14 @@ app.delete('/usuario/:id', [verificaToken, verificaAdmin_Role], function(req, re
 
     Usuario.findByIdAndUpdate(id, cambiaEstado, { new: true }, (err, usuarioBorrado) => {
         if (err) {
-            res.status(400).json({
+            return res.status(400).json({
                 ok: false,
                 err
             });
         }
 
         if (!usuarioBorrado) {
-            res.status(400).json({
+            return res.status(400).json({
                 ok: false,
                 err: {
                     message: 'Usuario NO encontrado'
