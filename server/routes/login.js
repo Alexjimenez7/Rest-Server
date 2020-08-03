@@ -35,7 +35,7 @@ app.post('/login', (req, res) => {
 
         if (usuarioDB.estado == false) {
 
-            return res.status(400).json({
+            return res.status(401).json({
                 ok: false,
                 err: {
                     message: 'Usuario se encuentra desactivado '
