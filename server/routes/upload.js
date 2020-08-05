@@ -183,7 +183,7 @@ function borraArchivo(tipo, nombreImagen) {
     if (nombreImagen === '' || !nombreImagen) {
         return;
     }
-    let pathImagen = path.resolve(__dirname, `../../uploads/${tipo}/${ nombreImagen}`);
+    let pathImagen = path.resolve(__dirname, `../../uploads/${tipo}/${nombreImagen}`);
     if (fs.existsSync(pathImagen)) {
         fs.unlinkSync(pathImagen);
     }

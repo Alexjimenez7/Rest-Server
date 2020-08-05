@@ -25,7 +25,7 @@ app.get('/producto', verificaToken, (req, res) => {
         .limit(limite)
         .populate('usuario', 'nombre email')
         .populate('categoria')
-        .exec((err, usuariosDB) => {
+        .exec((err, productosDB) => {
             if (err) {
                 return res.status(400).json({
                     ok: false,
@@ -36,7 +36,7 @@ app.get('/producto', verificaToken, (req, res) => {
             Producto.count({ disponible: true }, (err, conteo) => {
                 res.json({
                     ok: true,
-                    productos: usuariosDB,
+                    productos: productosDB,
                     cuantos: conteo
                 });
             });
@@ -85,14 +85,14 @@ app.get('/producto/:id', verificaToken, (req, res) => {
 
         })
         .populate('usuario', 'nombre email')
-        .populate('categoria', 'descripcion');
+        .populate('categoria');
 
 
 });
 
-// -------------------
-// Buscar productos
-// -------------------
+// ----------------------------
+// Buscar productos por término
+// ----------------------------
 
 app.get('/producto/buscar/:termino', verificaToken, (req, res) => {
 
@@ -100,7 +100,8 @@ app.get('/producto/buscar/:termino', verificaToken, (req, res) => {
     let regex = new RegExp(termino, 'i'); // --i - insensible a mayusculas y minusculas
     //Producto.find({ nombre: termino }) -- para terminos exactos
     Producto.find({ nombre: regex })
-        .populate('categoria', 'nombre')
+        .populate('usuario', 'nombre email')
+        .populate('categoria')
         .exec((err, productoDB) => {
 
             if (err) {
@@ -121,6 +122,39 @@ app.get('/producto/buscar/:termino', verificaToken, (req, res) => {
 
 });
 
+
+// -------------------------------
+// Buscar productos por categoría
+// ------------------------------
+
+app.get('/producto/porcat/:idcat', verificaToken, (req, res) => {
+
+    let idcat = req.params.idcat;
+
+    Producto.find({ categoria: idcat })
+        .populate('usuario', 'nombre email')
+        .populate('categoria')
+        .exec((err, productosDB) => {
+
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            Producto.count({ categoria: idcat }, (err, conteo) => {
+                res.json({
+                    ok: true,
+                    productos: productosDB,
+                    cuantos: conteo
+                });
+            });
+
+
+        });
+
+});
 
 
 // agregar producto
